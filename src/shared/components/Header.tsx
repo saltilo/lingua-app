@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import NavigationButton from "./NavigationButton";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Header = () => {
           <Typography
             variant="h5"
             fontWeight={700}
-            sx={{ cursor: "pointer", color: "#5b61fa" }}
+            sx={{ cursor: "pointer", color: "#7E94F9" }}
             onClick={() => navigate("/")}>
             LinguaStep
           </Typography>
@@ -55,12 +56,7 @@ const Header = () => {
               sx={{ textTransform: "none" }}>
               Зарегистрироваться
             </Button>
-            <Button
-              variant="contained"
-              onClick={() => navigate("/auth")}
-              sx={{ textTransform: "none" }}>
-              Войти
-            </Button>
+            <NavigationButton to="/auth">Войти</NavigationButton>
           </Box>
         </Toolbar>
       </Container>

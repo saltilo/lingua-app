@@ -1,6 +1,7 @@
 import { Box, Grid } from "@mui/material";
 import LanguageSelect from "../LanguageSelect/LanguageSelect";
 import SelectImage from "../../../assets/select_section.png";
+import { imageStyles } from "./LanguagesBlock.styles";
 
 const LanguagesBlock = () => {
   return (
@@ -15,13 +16,7 @@ const LanguagesBlock = () => {
             component="img"
             src={SelectImage}
             alt="Language selection illustration"
-            sx={{
-              maxWidth: "100%",
-              height: "auto",
-              maxHeight: 400,
-              display: "block",
-              mx: "auto",
-            }}
+            sx={imageStyles}
           />
         </Grid>
 

@@ -9,30 +9,23 @@ import {
   Paper,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { useGetLanguagesQuery } from "../../api/languagesApi";
+import {
+  inputStyle,
+  listItemStyle,
+  paperStyle,
+  searchWrapperStyle,
+} from "./LanguageSelect.styles";
 
 interface LanguageSelectProps {
   label: string;
   storageKey: string;
 }
 
-interface LanguageOption {
-  label: string;
-  code: string;
-  emoji: string;
-}
-
 const LanguageSelect = ({ label, storageKey }: LanguageSelectProps) => {
-  const [languages, setLanguages] = useState<LanguageOption[]>([]);
+  const { data: languages = [], isLoading, isError } = useGetLanguagesQuery();
   const [selectedLang, setSelectedLang] = useState("");
   const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    // или лучше вынести в конфиг?
-    fetch("http://localhost:3001/languages")
-      .then((res) => res.json())
-      .then((data) => setLanguages(data))
-      .catch((err) => console.error("Ошибка загрузки языков:", err));
-  }, []);
 
   useEffect(() => {
     const stored = localStorage.getItem(storageKey);
@@ -65,54 +58,42 @@ const LanguageSelect = ({ label, storageKey }: LanguageSelectProps) => {
       <Typography variant="h6" mb={1}>
         {label}
       </Typography>
-      <Paper
-        elevation={1}
-        sx={{
-          p: 1.5,
-          borderRadius: 4,
-          backgroundColor: "#D9E0FF",
-          maxHeight: 300,
-          overflowY: "auto",
-        }}>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            mb: 1.5,
-            px: 1,
-            py: 0.5,
-            borderRadius: 2,
-            backgroundColor: "white",
-          }}>
+      <Paper elevation={1} sx={paperStyle}>
+        <Box sx={searchWrapperStyle}>
           <SearchIcon sx={{ mr: 1, color: "#000000" }} />
           <InputBase
             placeholder="Поиск"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             fullWidth
-            sx={{
-              fontSize: 14,
-            }}
+            sx={inputStyle}
           />
         </Box>
-        <List disablePadding>
-          {filteredLanguages.map((lang) => (
-            <ListItemButton
-              key={lang.code}
-              selected={selectedLang === lang.code}
-              onClick={() => handleSelect(lang.code)}
-              sx={{ borderRadius: 2, mb: 0.5 }}>
-              <ListItemText
-                primary={
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <span>{lang.emoji}</span>
-                    <span>{lang.label}</span>
-                  </Box>
-                }
-              />
-            </ListItemButton>
-          ))}
-        </List>
+
+        {isLoading ? (
+          <Typography>Загрузка...</Typography>
+        ) : isError ? (
+          <Typography color="error">Ошибка загрузки</Typography>
+        ) : (
+          <List disablePadding>
+            {filteredLanguages.map((lang) => (
+              <ListItemButton
+                key={lang.code}
+                selected={selectedLang === lang.code}
+                onClick={() => handleSelect(lang.code)}
+                sx={listItemStyle}>
+                <ListItemText
+                  primary={
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <span>{lang.emoji}</span>
+                      <span>{lang.label}</span>
+                    </Box>
+                  }
+                />
+              </ListItemButton>
+            ))}
+          </List>
+        )}
       </Paper>
     </Box>
   );

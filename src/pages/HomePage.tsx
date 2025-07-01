@@ -1,4 +1,12 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Header from "../shared/components/Header";
@@ -6,13 +14,10 @@ import Footer from "../shared/components/Footer";
 import LanguagesBlock from "../shared/components/LanguagesBlock/LanguagesBlock";
 import StatsSection from "../shared/components/StatsSection/StatsSection";
 import AboutSection from "../shared/components/AboutSection/AboutSection";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
+import NavigationButton from "../shared/components/NavigationButton";
+
 const HomePage = () => {
   const navigate = useNavigate();
-
   const [showDialog, setShowDialog] = useState(false);
 
   const handleStartClick = () => {
@@ -40,15 +45,19 @@ const HomePage = () => {
             Говорите уверенно!
           </Typography>
           <Box mt={4} display="flex" justifyContent="center" gap={2}>
-            <Button
+            <NavigationButton
+              to="/auth"
               variant="contained"
               color="primary"
               onClick={handleStartClick}>
               Начать учиться
-            </Button>
-            <Button variant="outlined" onClick={handleAboutClick}>
+            </NavigationButton>
+            <NavigationButton
+              to="#about"
+              variant="outlined"
+              onClick={handleAboutClick}>
               О нас
-            </Button>
+            </NavigationButton>
           </Box>
         </Box>
 
@@ -70,9 +79,9 @@ const HomePage = () => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setShowDialog(false)} color="primary">
+          <NavigationButton to="/" color="primary">
             Закрыть
-          </Button>
+          </NavigationButton>
         </DialogActions>
       </Dialog>
     </Container>
