@@ -5,7 +5,6 @@ import Stack from "@mui/material/Stack";
 import StarIcon from "@mui/icons-material/Star";
 
 import { statsConfig } from "../../constants/statsConfig";
-import { starStyle } from "../StatsSection/StatsSection.styles";
 
 const StatsSection = () => {
   return (
@@ -54,17 +53,57 @@ const StatsSection = () => {
               </Avatar>
             )}
 
-            {item.type === "stars" && (
+            {item.type === "stars" && typeof item.rating === "number" && (
               <Stack
                 direction="row"
                 justifyContent="center"
-                spacing={0.3}
+                alignItems="center"
+                spacing={1}
                 mb={1}>
-                <StarIcon fontSize="small" sx={starStyle} />
-                <StarIcon fontSize="small" sx={starStyle} />
-                <StarIcon fontSize="small" sx={starStyle} />
-                <StarIcon fontSize="small" sx={starStyle} />
-                <StarIcon fontSize="small" sx={starStyle} />
+                <Stack direction="row" spacing={0.3}>
+                  {Array.from({ length: 5 }, (_, index) => {
+                    const isFull = index + 1 <= Math.floor(item.rating);
+                    const isHalf =
+                      index + 1 > Math.floor(item.rating) &&
+                      index < item.rating;
+
+                    return (
+                      <Box
+                        key={index}
+                        sx={{
+                          position: "relative",
+                          width: 20,
+                          height: 20,
+                        }}>
+                        <StarIcon
+                          sx={{
+                            color: "transparent",
+                            stroke: "#000",
+                            strokeWidth: 0.7,
+                            fontSize: 20,
+                          }}
+                        />
+
+                        {(isFull || isHalf) && (
+                          <StarIcon
+                            sx={{
+                              color: "#F1B31C",
+                              fontSize: 20,
+                              position: "absolute",
+                              left: 0,
+                              top: 0,
+                              clipPath: isHalf ? "inset(0 50% 0 0)" : "none",
+                            }}
+                          />
+                        )}
+                      </Box>
+                    );
+                  })}
+                </Stack>
+
+                <Typography variant="h6" fontWeight={700}>
+                  {item.rating}
+                </Typography>
               </Stack>
             )}
 
