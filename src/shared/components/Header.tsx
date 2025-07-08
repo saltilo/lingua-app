@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import NavigationButton from "./NavigationButton";
+import { baseButtonStyles } from "../../shared/styles/buttonStyles";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const Header = () => {
             <Button
               onClick={() => navigate("/")}
               color="inherit"
-              sx={{ textTransform: "none" }}>
+              sx={baseButtonStyles}>
               Главное
             </Button>
             <Button
@@ -38,13 +39,17 @@ const Header = () => {
                   ?.scrollIntoView({ behavior: "smooth" })
               }
               color="inherit"
-              sx={{ textTransform: "none" }}>
+              sx={baseButtonStyles}>
               О нас
             </Button>
             <Button
-              onClick={() => navigate("/contacts")}
+              onClick={() =>
+                document
+                  .getElementById("footer")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
               color="inherit"
-              sx={{ textTransform: "none" }}>
+              sx={baseButtonStyles}>
               Контакты
             </Button>
           </Box>
@@ -53,7 +58,7 @@ const Header = () => {
             <Button
               onClick={() => navigate("/signup")}
               color="inherit"
-              sx={{ textTransform: "none" }}>
+              sx={baseButtonStyles}>
               Зарегистрироваться
             </Button>
             <NavigationButton to="/auth">Войти</NavigationButton>

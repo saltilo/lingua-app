@@ -37,10 +37,10 @@ export const statsConfig = [
   {
     id: "rating",
     type: "stars",
-    title: "4.5",
+    rating: 4.5,
     subtitle: "Наш рейтинг",
     height: 100,
     minWidth: 140,
-    maxWidth: 180,
+    maxWidth: 220,
   },
 ];
