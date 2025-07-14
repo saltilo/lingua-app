@@ -1,7 +1,8 @@
-import { create, router as _router, defaults } from "json-server";
-const server = create();
-const router = _router("mock/db.json");
-const middlewares = defaults();
+import jsonServer from "json-server";
+
+const server = jsonServer.create();
+const router = jsonServer.router("mock/db.json");
+const middlewares = jsonServer.defaults();
 
 server.use(middlewares);
 server.use("/api", router);
