@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "dev:api": "json-server --watch mock/db.json --port 3001",
     "type-check": "tsc --noEmit",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "start:api": "node server.js"
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.3.0",
